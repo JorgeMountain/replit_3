@@ -45,7 +45,7 @@ bool verificar_admin(string archivo, string clave_ingresado){
 
 
 
-void modificar_archivos(string archivo,string cedula, string clave, string saldo2){
+string modificar_archivos(string archivo,string cedula, string clave, string saldo2){
     string clave_ori, cedula_ori, archivo_new, saldo;
 
     for (unsigned int i=0; i<archivo.length(); i++){
@@ -73,12 +73,7 @@ void modificar_archivos(string archivo,string cedula, string clave, string saldo
       }
       
      }
-         /*
-         ofstream guardar;
-         guardar.open("InfoUsr.txt",ios::app);
-         guardar <<archivo_new<<endl;
-*/
-escribir_txt("InfoUsr.txt", archivo_new);
+     return archivo_new;
  }
 
 

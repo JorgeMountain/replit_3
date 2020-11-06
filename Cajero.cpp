@@ -1,15 +1,15 @@
-#include "Archivos.h"
+#include "codificacion.h"
 
 void cajero(string archivo_admin,string archivo_usr, int metodo, int n){
       string clave_admin, clave_usr, ced_usr;
       string open_admin, open_usr;
-      open_admin = leer_txt(archivo_admin);
-      open_usr= leer_txt(archivo_usr);
-      string archivo;
+      
+      open_admin = codifi(archivo_admin, metodo, n);
+      open_usr= codifi(archivo_usr, metodo, n);
       int usr=0, Nsaldo;
       bool ban=true;
       while (ban==true){
-
+      
           cout << "Bienvenido, porfavor ingrese el tipo de usuario "<< endl;
           cout << " ------------------ "<< endl;
           cout << "|    Usuario    (1) |"<< endl;
@@ -34,6 +34,8 @@ void cajero(string archivo_admin,string archivo_usr, int metodo, int n){
                   cin >> ced_usr;
                   cout<<"ingrese su clave : "<<endl;
                   cin>>clave_usr;
+                  open_usr=decodifi(open_usr, metodo, n);
+
                 while (veri_usr==false){                        
                     for (unsigned int i=0; i<open_usr.length(); i++){
                         for (;open_usr[i]!=44;i++){
@@ -55,10 +57,12 @@ void cajero(string archivo_admin,string archivo_usr, int metodo, int n){
                           cedula.clear();
                         }
                     }
+                  open_usr= codifi(archivo_usr, metodo, n);
                }
-
+              
                 while (usr==true){
                   
+                  string modificado;
                   cout << " ---------------------- "<< endl;
                   cout << "|      Bienvenido      |"<< endl;
                   cout << "|   Que desea hacer?   |"<< endl;
@@ -70,25 +74,37 @@ void cajero(string archivo_admin,string archivo_usr, int metodo, int n){
                   cin >> n;
                   system("CLS");
 
+                  open_usr=decodifi(open_usr, metodo, n);
                   if (n==1){
                     saldo2=verificar_saldo(saldo);
-                    modificar_archivos(open_usr,cedula, clave, saldo2);
+                    cout << "entra";
+                    cout<<open_usr;             
+                    modificado=modificar_archivos(open_usr,cedula, clave, saldo2);
+                    cout<<modificado;
+                    escribir_txt("InfoUsr.txt", modificado);
+                    saldo=saldo2;
                   }
+                   
                   else if(n==2){
                    saldo2=retirar_saldo(saldo);
                    cout<<saldo2;
-                   modificar_archivos(open_usr,cedula, clave, saldo2);
-
+                   modificado= modificar_archivos(open_usr,cedula, clave, saldo2);
+                   escribir_txt("InfoUsr.txt", modificado);
+                   saldo=saldo2;
+                             
                   }
+                  
                  else if (n==3){
                    usr=false;
                    break;
                  }
+                 open_usr= codifi(archivo_usr, metodo, n);
                 }
-              
-            }}
+              }
+            }
             break;
             case 2:{
+
               string datos_usr;
               bool adm=true;
               bool veri_adm= false;
@@ -101,9 +117,11 @@ void cajero(string archivo_admin,string archivo_usr, int metodo, int n){
                       adm=false;
                       break;
                     }
-                    else{
+                    else{  
+                      open_admin=decodifi(open_admin,  metodo,  n);  
                       veri_adm=verificar_admin(open_admin,clave_admin);
-                    }
+                      open_admin=codifi(open_admin,  metodo,  n);
+                    }                
                   }
                 if (adm==true){
                     system("CLS");
@@ -183,6 +201,7 @@ void cajero(string archivo_admin,string archivo_usr, int metodo, int n){
             } 
             break;    
             case 3:{
+             cout << "Gracias por elegir nuestros servicios (/0u0)/"<< endl; 
               ban=false;
                   break;
             }

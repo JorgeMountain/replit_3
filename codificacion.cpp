@@ -1,30 +1,30 @@
 #include "codificacion.h"
 using namespace std;
-void codificacion(string name,int method, int n){
 
+string codificacion(string name,int method, int n){
+
+  string  bina_codi;
   if (method==1){
-      string texto, binario, bin_text,bina_codi,bina_deco;
-      texto=leer_txt(name);
-      binario=text2bin(texto);
-      bina_codi= Metodo1_particion( binario, n);
-      bina_deco=Metodo1_particion_deco( bina_codi, n);
-      bin_text=bin2text(bina_deco);
+      bina_codi= Metodo1_particion(name, n);
 
-      cout << binario<< endl;
-      cout << bina_codi<< endl;
-      cout << bina_deco<< endl;
-      cout << bin_text<< endl;
   }
   else{
-   string texto, binario, bin_text,bina_codi,bina_deco;
-   texto=leer_txt(name);
-   binario=text2bin(texto);
-   bina_codi= metodo2( binario, n);
-   bina_deco=metodo2_deco( bina_codi, n);
-   bin_text=bin2text(bina_deco);
-
-      cout << bin_text<< endl;
+   bina_codi= metodo2( name, n);
   }
+  return bina_codi;
+}
+
+string decodificacion(string name,int method, int n){
+  string bina_codi;
+
+  if (method==1){
+      bina_codi= Metodo1_particion_deco( name, n);
+
+  }
+  else{
+   bina_codi= metodo2_deco( name, n);
+  }
+  return bina_codi;
 }
 
 string text2bin(string texto){
@@ -82,7 +82,6 @@ string Metodo1_particion(string binario, int n){
         }
 
   }
-cout<< copia;
 return codificado;
 }
 
@@ -106,7 +105,6 @@ string Metodo1_particion_deco(string binario, int n){
         }
         else{
              if ((k+1)*n-1==i){
-                  cout << partido << endl;
                   copia= codificar_grupo(partido,copia);
                   decodificado=decodificado+copia;
                   partido.clear();
@@ -212,3 +210,24 @@ string cambio_posicion_deco(string binario){
     }
     return bina2;
 }
+
+
+string codifi(string archivo, int metodo, int n){
+  string open_admin_usr;
+  open_admin_usr = leer_txt(archivo);
+  open_admin_usr = text2bin(open_admin_usr);
+  open_admin_usr= codificacion(open_admin_usr,metodo, n);
+  open_admin_usr = bin2text(open_admin_usr);
+  return open_admin_usr;
+}
+
+
+string decodifi(string archivo, int metodo, int n){
+  string open_admin;
+  open_admin = text2bin(archivo);
+  open_admin= decodificacion(open_admin,metodo, n);
+  open_admin = bin2text(open_admin);  
+  return open_admin;
+}
+
+

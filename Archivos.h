@@ -23,7 +23,9 @@ string verificar_saldo(string saldo);
 string retirar_saldo(string saldo);
 string modificar(string archivo,string ced, string clave, string saldo);
 
-void modificar_archivos(string open_usr, string nombre, string clave,string saldo2);
+string modificar_archivos(string open_usr, string nombre, string clave,string saldo2);
+
+
 
 
 
