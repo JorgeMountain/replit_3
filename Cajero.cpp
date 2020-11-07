@@ -77,8 +77,7 @@ void cajero(string archivo_admin,string archivo_usr, int metodo, int n){
                   open_usr=decodifi(open_usr, metodo, n);
                   if (n==1){
                     saldo2=verificar_saldo(saldo);
-                    cout << "entra";
-                    cout<<open_usr;             
+                    cout<<open_usr;
                     modificado=modificar_archivos(open_usr,cedula, clave, saldo2);
                     cout<<modificado;
                     escribir_txt("InfoUsr.txt", modificado);

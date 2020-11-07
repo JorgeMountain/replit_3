@@ -8,8 +8,9 @@ int main() {
   int metodo, n;
   cout<<"Ingrese el metodo de codificacion deseado y la semilla  n: ";
   cin>> metodo>> n;
+  PruebasMetodo(archivo_prueba, metodo, n);
   cajero(archivo_admin, archivo_usr, metodo, n);
-  ;
+  
   return 0;
 }
 

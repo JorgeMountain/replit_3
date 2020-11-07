@@ -19,9 +19,7 @@ string leer_txt(string name){
   }
   else cout<<"El archivo de texto no existe"<<endl;
   k.close();
-  
-  return data;
-  
+  return data; 
 }
 
 bool verificar_admin(string archivo, string clave_ingresado){

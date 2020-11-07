@@ -3,7 +3,7 @@
 #include "Archivos.h"
 
 
-
+void PruebasMetodo(string name,int method, int n);
 string codificacion(string name,int method, int n);
 string text2bin(string texto);
 string bin2text(string binario);

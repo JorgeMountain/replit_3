@@ -1,6 +1,23 @@
 #include "codificacion.h"
 using namespace std;
 
+
+void PruebasMetodo(string name,int method, int n){
+
+  string texto, binario, codificado, texto_new, decodificado;
+  texto = leer_txt(name);
+  binario = text2bin(texto);
+  codificado= codificacion(binario ,method, n);
+  decodificado= decodificacion(codificado ,method, n);
+  texto_new = bin2text(decodificado);
+  cout<<"Texto: "<<texto<<endl;
+  cout<<"binario...: "<<binario<<endl;
+  cout<<"codificado: "<<codificado<<endl;
+  cout<<"decodifica: "<<decodificado<<endl;
+  cout<<"texto: "<<texto_new<<endl;
+}
+
+
 string codificacion(string name,int method, int n){
 
   string  bina_codi;
@@ -86,6 +103,8 @@ return codificado;
 }
 
 
+
+
 string Metodo1_particion_deco(string binario, int n){
   string partido, copia, decodificado;
     for (unsigned long long int i=0, k=0;i<binario.length();i++){
@@ -145,10 +164,8 @@ string codificar_grupo(string partido, string copia ){
             else partido[i]=49;
         }
     }
-    return partido;
+     return partido;
 }
-
-
 
 
 string metodo2(string binario,int n){
