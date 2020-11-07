@@ -7,12 +7,13 @@ void PruebasMetodo(string name,int method, int n){
   string texto, binario, codificado, texto_new, decodificado;
   texto = leer_txt(name);
   binario = text2bin(texto);
-  //codificado= codificacion(binario ,method, n);
-  decodificado= decodificacion(binario ,method, n);
+  codificado= codificacion(binario ,method, n);
+  decodificado= decodificacion(codificado  ,method, n);
+  //decodificado= decodificacion(binario  ,method, n);
   texto_new = bin2text(decodificado);
   cout<<"Texto: "<<texto<<endl;
   cout<<"binario...: "<<binario<<endl;
-  //cout<<"codificado: "<<codificado<<endl;
+  cout<<"codificado: "<<codificado<<endl;
   cout<<"decodifica: "<<decodificado<<endl;
   cout<<"texto: "<<texto_new<<endl;
 }
@@ -71,8 +72,7 @@ string bin2text(string binario){
         bina+=8;
         multiplicador =1;
     }
-    return texto;
-    
+    return texto;    
 }
     
 
@@ -100,8 +100,6 @@ return codificado;
 }
 
 
-
-
 string Metodo1_particion_deco(string binario, int n){
   string partido, copia, decodificado;
     for (unsigned long long int i=0, k=0;i<binario.length();i++){
@@ -118,10 +116,10 @@ string Metodo1_particion_deco(string binario, int n){
                   decodificado=decodificado+copia;
                   partido.clear();
                   k++;
-                }     
+                }
         else if (i==binario.length()-1){
             copia=codificar_grupo(partido, copia);
-            decodificado=decodificado +copia;           
+            decodificado=decodificado +copia;      
             }
     }
     return decodificado;    
@@ -147,15 +145,19 @@ string codificar_grupo(string partido, string copia ){
         }
     }
     else if(cero>uno){
-        for (unsigned int i=1;i<partido.length();i+=2){
+        for (unsigned int i=1;i<partido.length();i++){
+          if(i%2==0){
             if(partido[i]==49) partido[i]=48;
             else partido[i]=49;
+          }
         }
     }
     else{
-        for (unsigned int i=2;i<partido.length();i+=3){
+        for (unsigned int i=2;i<partido.length();i++){
+          if (i%3==0){
             if(partido[i]==49) partido[i]=48;
             else partido[i]=49;
+          }
         }
     }
      return partido;
@@ -163,64 +165,66 @@ string codificar_grupo(string partido, string copia ){
 
 
 string metodo2(string binario,int n){
- string archivo, copia;
-        unsigned int k=0;
-
+ string grupo,  codificado, codi_grupo, copia;
+ unsigned int k=0;
         for(unsigned long long int i=0;i<binario.length();i++){
-            copia.push_back(binario[i]);
+            grupo.push_back(binario[i]);
             if (i==(k+1)*n-1){
-                archivo+= cambio_posicion(copia);
-                copia.clear();
+               copia= grupo[grupo.length()-1];
+               for (unsigned int i=0;i<grupo.length();i++){
+                  codi_grupo+=copia;
+                  copia=grupo[i];
+               }
+               codificado=codi_grupo;
+               grupo.clear();
                 k++;
             }
             else if (i==binario.length()-1){
-                archivo+= cambio_posicion(copia);
+               copia= grupo[grupo.length()-1];
+               for (unsigned int i=0;i<grupo.length();i++){
+                  codi_grupo+=copia;
+                  copia=grupo[i];
+               }
+               codificado=codi_grupo;
             }
         }
-        return archivo;
+        return codificado;
  }
-
-
-string cambio_posicion(string binario){
-    unsigned int i;
-    string bina2, copia;
-    copia=binario[binario.length()-1];
-    for (i=0;i<binario.length();i++){
-        bina2+=copia;
-        copia=binario[i];
-    }
-    return bina2;
-}
-
-
 
 string metodo2_deco(string binario,int n){
- string archivo, copia;
-        unsigned int k=0;
-        for(unsigned long long int i=0;i<binario.length();i++){
-            copia.push_back(binario[i]);
+    string decodificado,decodi_grupo, grupo;
+    unsigned int k=0;
+         for(unsigned long long int i=0;i<binario.length();i++){
+            grupo.push_back(binario[i]);
             if (i==(k+1)*n-1){
-                archivo+= cambio_posicion_deco(copia);
-                copia.clear();
-                k++;
-            }
-            else if (i==binario.length()-1){
-                archivo+= cambio_posicion_deco(copia);
+              for (unsigned int i=1;i<=grupo.length();i++){
+               if (i==grupo.length()){
+                  decodi_grupo+=grupo[0];
+               } 
+               else{
+                 decodi_grupo+=grupo[i];
+               } 
+             }
+              decodificado=decodi_grupo;
+              grupo.clear();
+              k++;
+           }
+          else if (i==binario.length()-1){
+               for (unsigned int i=1;i<=grupo.length();i++){
+               if (i==grupo.length()){
+                  decodi_grupo+=grupo[0];
+               } 
+               else{
+                 decodi_grupo+=grupo[i];
+               }
+             }
+            decodificado=decodi_grupo;
             }
         }
-        return archivo;
+        return decodificado;
  }
 
 
-string cambio_posicion_deco(string binario){
-    unsigned int i;
-    string bina2, copia;
-    for (i=1;i<=binario.length();i++){
-        if (i==binario.length()) bina2+=binario[0];
-        else bina2+=binario[i];
-    }
-    return bina2;
-}
 
 
 string codifi(string archivo, int metodo, int n){
